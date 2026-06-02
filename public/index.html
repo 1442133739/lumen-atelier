@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumen Atelier 摄影作品集</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home">Lumen Atelier</a>
+      <nav>
+        <a href="#work">作品</a>
+        <a href="#call">征稿</a>
+        <a href="#contact">联系</a>
+        <a href="/admin.html">后台</a>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-media" aria-hidden="true"></div>
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Photography Portfolio / Commission Studio</p>
+          <h1>Lumen Atelier</h1>
+          <p>为人物、品牌与空间拍摄成熟、克制、有温度的视觉叙事。</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#work">查看作品</a>
+            <a class="button ghost" href="#call">提交拍摄需求</a>
+          </div>
+        </div>
+        <div class="hero-strip">
+          <span>Portrait</span><span>Editorial</span><span>Wedding</span><span>Commercial</span><span>Interior</span>
+        </div>
+      </section>
+
+      <section class="metrics reveal">
+        <div><strong data-count="86">0</strong><span>完成项目</span></div>
+        <div><strong data-count="14">0</strong><span>城市拍摄</span></div>
+        <div><strong data-count="9">0</strong><span>合作品牌</span></div>
+      </section>
+
+      <section id="work" class="section">
+        <div class="section-head reveal">
+          <p class="eyebrow">Selected Work</p>
+          <h2>作品展示</h2>
+          <div class="filters" id="filters"></div>
+        </div>
+        <div class="gallery" id="gallery"></div>
+      </section>
+
+      <section id="call" class="section split">
+        <div class="reveal">
+          <p class="eyebrow">Open Call</p>
+          <h2>征稿与拍摄委托</h2>
+          <p class="lead">欢迎提交人物肖像、品牌视觉、婚礼纪实、空间拍摄或编辑选题。后台会保存每一条需求，便于后续跟进。</p>
+          <div class="call-notes">
+            <span>48 小时内回复</span>
+            <span>可远程沟通方案</span>
+            <span>支持长期项目</span>
+          </div>
+        </div>
+        <form class="panel reveal" id="submissionForm">
+          <label>姓名<input name="name" required /></label>
+          <label>邮箱<input name="email" type="email" required /></label>
+          <label>电话<input name="phone" /></label>
+          <label>项目类型
+            <select name="projectType" required>
+              <option value="portrait">人物肖像</option>
+              <option value="commercial">商业/产品</option>
+              <option value="wedding">婚礼纪实</option>
+              <option value="editorial">编辑选题</option>
+              <option value="interior">空间/建筑</option>
+            </select>
+          </label>
+          <label>预算范围<input name="budget" placeholder="例如 8k-15k" /></label>
+          <label>期望日期<input name="preferredDate" type="date" /></label>
+          <label class="full">需求说明<textarea name="brief" required></textarea></label>
+          <button class="button primary" type="submit">提交征稿</button>
+          <p class="form-status" id="submissionStatus"></p>
+        </form>
+      </section>
+
+      <section id="contact" class="section split contact-band">
+        <div class="reveal">
+          <p class="eyebrow">Contact</p>
+          <h2>联系方式</h2>
+          <p class="lead">适合需要稳定视觉风格、完整交付流程和后期统一调性的拍摄项目。</p>
+          <address>
+            <span id="studioEmail">hello@lumen.example</span>
+            <span id="studioPhone">+86 138 0000 2026</span>
+            <span id="studioCity">Shanghai / Hangzhou / Remote</span>
+          </address>
+        </div>
+        <form class="panel reveal" id="messageForm">
+          <label>姓名<input name="name" required /></label>
+          <label>邮箱<input name="email" type="email" required /></label>
+          <label class="full">主题<input name="subject" required /></label>
+          <label class="full">留言<textarea name="message" required></textarea></label>
+          <button class="button primary" type="submit">发送消息</button>
+          <p class="form-status" id="messageStatus"></p>
+        </form>
+      </section>
+    </main>
+
+    <div class="lightbox" id="lightbox" hidden>
+      <button aria-label="关闭" id="closeLightbox">×</button>
+      <img alt="" id="lightboxImage" />
+      <div>
+        <h3 id="lightboxTitle"></h3>
+        <p id="lightboxText"></p>
+      </div>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

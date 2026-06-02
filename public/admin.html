@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumen Atelier 管理后台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="admin-body">
+    <section class="login" id="loginView">
+      <form class="panel" id="loginForm">
+        <div>
+          <p class="eyebrow">Admin</p>
+          <h2>管理后台</h2>
+        </div>
+        <label>账号<input name="username" value="admin" required /></label>
+        <label>密码<input name="password" type="password" value="photo2026" required /></label>
+        <button class="button primary" type="submit">登录</button>
+        <p class="form-status" id="loginStatus"></p>
+      </form>
+    </section>
+
+    <section class="admin-shell hidden" id="adminView">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Lumen Atelier</p>
+          <h3>Studio CMS</h3>
+        </div>
+        <button class="active" data-tab="overview">总览</button>
+        <button data-tab="projects">作品管理</button>
+        <button data-tab="submissions">征稿管理</button>
+        <button data-tab="messages">留言管理</button>
+        <button id="logoutBtn">退出登录</button>
+      </aside>
+      <main class="admin-main">
+        <div class="admin-top">
+          <div>
+            <p class="eyebrow">Dashboard</p>
+            <h2 id="tabTitle">总览</h2>
+          </div>
+          <a class="button" href="/" target="_blank">查看前台</a>
+        </div>
+
+        <section id="overviewTab" class="tab">
+          <div class="stat-grid" id="stats"></div>
+          <div class="admin-block">
+            <h3 class="full">新增作品</h3>
+            <form class="full panel" id="projectForm" enctype="multipart/form-data">
+              <label>标题<input name="title" required /></label>
+              <label>分类
+                <select name="category">
+                  <option value="portrait">人物肖像</option>
+                  <option value="commercial">商业/产品</option>
+                  <option value="wedding">婚礼纪实</option>
+                  <option value="editorial">编辑选题</option>
+                  <option value="event">活动现场</option>
+                  <option value="interior">空间建筑</option>
+                </select>
+              </label>
+              <label>年份<input name="year" value="2026" /></label>
+              <label>地点<input name="location" /></label>
+              <label>客户<input name="client" /></label>
+              <label>标签<input name="tags" placeholder="肖像,商业,自然光" /></label>
+              <label class="full">图片链接<input name="coverUrl" placeholder="https://..." /></label>
+              <label class="full">或上传图片<input name="image" type="file" accept="image/*" /></label>
+              <label class="full">描述<textarea name="description"></textarea></label>
+              <label><input name="featured" type="checkbox" /> 设为精选</label>
+              <button class="button primary" type="submit">保存作品</button>
+              <p class="form-status" id="projectStatus"></p>
+            </form>
+          </div>
+        </section>
+
+        <section id="projectsTab" class="tab hidden"><table class="table" id="projectsTable"></table></section>
+        <section id="submissionsTab" class="tab hidden"><table class="table" id="submissionsTable"></table></section>
+        <section id="messagesTab" class="tab hidden"><table class="table" id="messagesTable"></table></section>
+      </main>
+    </section>
+
+    <script src="/admin.js"></script>
+  </body>
+</html>
