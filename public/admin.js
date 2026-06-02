@@ -122,13 +122,14 @@ qs("#loginForm").addEventListener("submit", async (event) => {
 
 qs("#projectForm").addEventListener("submit", async (event) => {
   event.preventDefault();
+  const form = event.currentTarget;
   qs("#projectStatus").textContent = "保存中...";
-  const formData = new FormData(event.currentTarget);
+  const formData = new FormData(form);
   try {
     const res = await fetch("/api/admin/projects", { method: "POST", headers: { Authorization: `Bearer ${token}` }, body: formData });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "保存失败");
-    event.currentTarget.reset();
+    form.reset();
     qs("#projectStatus").textContent = "作品已保存。";
     await loadDashboard();
   } catch (error) {

@@ -87,12 +87,13 @@ function animateCounters() {
 async function bindForm(formId, statusId, url) {
   qs(formId).addEventListener("submit", async (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
     const status = qs(statusId);
-    const payload = Object.fromEntries(new FormData(event.currentTarget));
+    const payload = Object.fromEntries(new FormData(form));
     status.textContent = "正在提交...";
     try {
       await request(url, { method: "POST", body: JSON.stringify(payload) });
-      event.currentTarget.reset();
+      form.reset();
       status.textContent = "已保存，我们会尽快回复。";
     } catch (error) {
       status.textContent = error.message;
