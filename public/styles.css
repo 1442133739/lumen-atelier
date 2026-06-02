@@ -200,6 +200,7 @@ textarea { min-height: 126px; resize: vertical; }
 .contact-band { background: #e7e3d8; }
 address { display: grid; gap: 10px; margin-top: 24px; font-style: normal; color: var(--muted); }
 .form-status { min-height: 22px; color: var(--sage); margin: 0; }
+.form-status a { color: var(--copper); text-decoration: underline; }
 .lightbox {
   position: fixed;
   z-index: 50;
@@ -256,6 +257,26 @@ address { display: grid; gap: 10px; margin-top: 24px; font-style: normal; color:
   background: linear-gradient(rgba(20,20,20,0.46), rgba(20,20,20,0.46)), url("https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1800&q=86") center/cover;
 }
 .login .panel { max-width: 430px; width: 100%; grid-template-columns: 1fr; }
+.auth-panel { max-width: 480px; }
+.auth-tabs { display: flex; gap: 8px; margin-top: 18px; }
+.auth-tabs button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+.auth-tabs button.active { background: var(--charcoal); color: var(--white); }
+.auth-form { display: grid; gap: 14px; }
+.user-pill { color: rgba(255,250,242,0.72); line-height: 1.5; word-break: break-word; }
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: rgba(119, 131, 107, 0.16);
+  color: #45503f;
+  padding: 6px 10px;
+}
 .hidden { display: none !important; }
 
 @keyframes slowZoom { from { transform: scale(1.04); } to { transform: scale(1.11); } }

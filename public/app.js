@@ -84,17 +84,43 @@ function animateCounters() {
   });
 }
 
-async function bindForm(formId, statusId, url) {
-  qs(formId).addEventListener("submit", async (event) => {
+async function bindSubmissionForm() {
+  qs("#submissionForm").addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    const status = qs(statusId);
+    const status = qs("#submissionStatus");
+    const token = localStorage.getItem("studioToken");
+    if (!token) {
+      status.innerHTML = `请先到 <a href="/admin.html">用户中心</a> 注册或登录，登录后提交的征稿才能查看进度。`;
+      return;
+    }
     const payload = Object.fromEntries(new FormData(form));
     status.textContent = "正在提交...";
     try {
-      await request(url, { method: "POST", body: JSON.stringify(payload) });
+      await request("/api/submissions", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: JSON.stringify(payload),
+      });
       form.reset();
-      status.textContent = "已保存，我们会尽快回复。";
+      status.innerHTML = `已保存，可到 <a href="/admin.html">用户中心</a> 查看征稿进度。`;
+    } catch (error) {
+      status.textContent = error.message;
+    }
+  });
+}
+
+async function bindMessageForm() {
+  qs("#messageForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const status = qs("#messageStatus");
+    const payload = Object.fromEntries(new FormData(form));
+    status.textContent = "正在提交...";
+    try {
+      await request("/api/messages", { method: "POST", body: JSON.stringify(payload) });
+      form.reset();
+      status.textContent = "已发送，我们会尽快回复。";
     } catch (error) {
       status.textContent = error.message;
     }
@@ -111,8 +137,8 @@ async function init() {
   renderGallery();
   observeReveals();
   animateCounters();
-  bindForm("#submissionForm", "#submissionStatus", "/api/submissions");
-  bindForm("#messageForm", "#messageStatus", "/api/messages");
+  bindSubmissionForm();
+  bindMessageForm();
   qs("#closeLightbox").addEventListener("click", () => { qs("#lightbox").hidden = true; });
 }
 

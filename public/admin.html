@@ -3,35 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lumen Atelier 管理后台</title>
+    <title>Lumen Atelier 用户中心</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="admin-body">
     <section class="login" id="loginView">
-      <form class="panel" id="loginForm">
-        <div>
-          <p class="eyebrow">Admin</p>
-          <h2>管理后台</h2>
+      <div class="panel auth-panel">
+        <div class="full">
+          <p class="eyebrow">Account</p>
+          <h2>用户中心</h2>
+          <div class="auth-tabs">
+            <button class="active" type="button" data-auth-tab="login">登录</button>
+            <button type="button" data-auth-tab="register">注册</button>
+          </div>
         </div>
-        <label>账号<input name="username" value="admin" required /></label>
-        <label>密码<input name="password" type="password" value="photo2026" required /></label>
-        <button class="button primary" type="submit">登录</button>
-        <p class="form-status" id="loginStatus"></p>
-      </form>
+
+        <form class="full auth-form" id="loginForm">
+          <label>邮箱<input name="email" type="email" autocomplete="email" required /></label>
+          <label>密码<input name="password" type="password" autocomplete="current-password" required /></label>
+          <button class="button primary" type="submit">登录</button>
+          <p class="form-status" id="loginStatus"></p>
+        </form>
+
+        <form class="full auth-form hidden" id="registerForm">
+          <label>姓名<input name="name" autocomplete="name" required /></label>
+          <label>邮箱<input name="email" type="email" autocomplete="email" required /></label>
+          <label>密码<input name="password" type="password" autocomplete="new-password" minlength="6" required /></label>
+          <button class="button primary" type="submit">注册并登录</button>
+          <p class="form-status" id="registerStatus"></p>
+        </form>
+      </div>
     </section>
 
     <section class="admin-shell hidden" id="adminView">
       <aside class="sidebar">
         <div>
           <p class="eyebrow">Lumen Atelier</p>
-          <h3>Studio CMS</h3>
+          <h3>用户中心</h3>
+          <p class="user-pill" id="userLabel"></p>
         </div>
         <button class="active" data-tab="overview">总览</button>
-        <button data-tab="projects">作品管理</button>
-        <button data-tab="submissions">征稿管理</button>
-        <button data-tab="messages">留言管理</button>
+        <button data-tab="projects">我的作品</button>
+        <button data-tab="submissions">征稿进度</button>
         <button id="logoutBtn">退出登录</button>
       </aside>
+
       <main class="admin-main">
         <div class="admin-top">
           <div>
@@ -44,8 +60,8 @@
         <section id="overviewTab" class="tab">
           <div class="stat-grid" id="stats"></div>
           <div class="admin-block">
-            <h3 class="full">新增作品</h3>
-            <form class="full panel" id="projectForm" enctype="multipart/form-data">
+            <h3>上传作品</h3>
+            <form class="panel" id="projectForm" enctype="multipart/form-data">
               <label>标题<input name="title" required /></label>
               <label>分类
                 <select name="category">
@@ -64,16 +80,20 @@
               <label class="full">图片链接<input name="coverUrl" placeholder="https://..." /></label>
               <label class="full">或上传图片<input name="image" type="file" accept="image/*" /></label>
               <label class="full">描述<textarea name="description"></textarea></label>
-              <label><input name="featured" type="checkbox" /> 设为精选</label>
+              <label><input name="published" type="checkbox" checked /> 发布到前台展示</label>
               <button class="button primary" type="submit">保存作品</button>
               <p class="form-status" id="projectStatus"></p>
             </form>
           </div>
         </section>
 
-        <section id="projectsTab" class="tab hidden"><table class="table" id="projectsTable"></table></section>
-        <section id="submissionsTab" class="tab hidden"><table class="table" id="submissionsTable"></table></section>
-        <section id="messagesTab" class="tab hidden"><table class="table" id="messagesTable"></table></section>
+        <section id="projectsTab" class="tab hidden">
+          <table class="table" id="projectsTable"></table>
+        </section>
+
+        <section id="submissionsTab" class="tab hidden">
+          <table class="table" id="submissionsTable"></table>
+        </section>
       </main>
     </section>
 
