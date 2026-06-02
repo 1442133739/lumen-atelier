@@ -29,6 +29,38 @@
             <a class="button ghost" href="#call">提交拍摄需求</a>
           </div>
         </div>
+        <aside class="home-account reveal" id="homeAccount">
+          <div id="homeAuthForms">
+            <p class="eyebrow">Member Entry</p>
+            <h3>登录后提交作品与征稿</h3>
+            <div class="auth-tabs compact">
+              <button class="active" type="button" data-home-auth-tab="login">登录</button>
+              <button type="button" data-home-auth-tab="register">注册</button>
+            </div>
+            <form class="auth-form compact-form" id="homeLoginForm">
+              <label>邮箱<input name="email" type="email" autocomplete="email" required /></label>
+              <label>密码<input name="password" type="password" autocomplete="current-password" required /></label>
+              <button class="button primary" type="submit">登录</button>
+              <p class="form-status" id="homeLoginStatus"></p>
+            </form>
+            <form class="auth-form compact-form hidden" id="homeRegisterForm">
+              <label>姓名<input name="name" autocomplete="name" required /></label>
+              <label>邮箱<input name="email" type="email" autocomplete="email" required /></label>
+              <label>密码<input name="password" type="password" autocomplete="new-password" minlength="6" required /></label>
+              <button class="button primary" type="submit">注册并登录</button>
+              <p class="form-status" id="homeRegisterStatus"></p>
+            </form>
+          </div>
+          <div class="hidden" id="homeAccountState">
+            <p class="eyebrow">Signed In</p>
+            <h3 id="homeUserName">已登录</h3>
+            <p id="homeUserEmail"></p>
+            <div class="hero-actions tight">
+              <a class="button primary" href="/admin.html">进入用户中心</a>
+              <button class="button ghost dark" id="homeLogoutBtn" type="button">退出</button>
+            </div>
+          </div>
+        </aside>
         <div class="hero-strip">
           <span>Portrait</span><span>Editorial</span><span>Wedding</span><span>Commercial</span><span>Interior</span>
         </div>
@@ -58,6 +90,11 @@
             <span>48 小时内回复</span>
             <span>可远程沟通方案</span>
             <span>支持长期项目</span>
+          </div>
+          <div class="call-flow">
+            <div><strong>01</strong><span>注册或登录账户</span></div>
+            <div><strong>02</strong><span>提交项目叙述、预算与时间</span></div>
+            <div><strong>03</strong><span>在用户中心跟踪进度</span></div>
           </div>
         </div>
         <form class="panel reveal" id="submissionForm">

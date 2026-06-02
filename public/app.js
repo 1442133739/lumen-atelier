@@ -23,6 +23,50 @@ async function request(url, options = {}) {
   return data;
 }
 
+function getToken() {
+  return localStorage.getItem("studioToken") || "";
+}
+
+function setSignedIn(user) {
+  qs("#homeAuthForms").classList.add("hidden");
+  qs("#homeAccountState").classList.remove("hidden");
+  qs("#homeUserName").textContent = user.name || "已登录";
+  qs("#homeUserEmail").textContent = user.email || "";
+}
+
+function setSignedOut() {
+  qs("#homeAuthForms").classList.remove("hidden");
+  qs("#homeAccountState").classList.add("hidden");
+}
+
+async function loadHomeAccount() {
+  const token = getToken();
+  if (!token) {
+    setSignedOut();
+    return;
+  }
+  try {
+    const data = await request("/api/account", { headers: { Authorization: `Bearer ${token}` } });
+    setSignedIn(data.user);
+  } catch {
+    localStorage.removeItem("studioToken");
+    setSignedOut();
+  }
+}
+
+async function homeAuth(url, form, statusEl) {
+  statusEl.textContent = "处理中...";
+  try {
+    const data = await request(url, { method: "POST", body: JSON.stringify(Object.fromEntries(new FormData(form))) });
+    localStorage.setItem("studioToken", data.token);
+    form.reset();
+    setSignedIn(data.user);
+    statusEl.textContent = "";
+  } catch (error) {
+    statusEl.textContent = error.message;
+  }
+}
+
 function renderFilters() {
   const categories = ["all", ...new Set(state.projects.map((project) => project.category))];
   qs("#filters").innerHTML = categories.map((category) => (
@@ -89,7 +133,7 @@ async function bindSubmissionForm() {
     event.preventDefault();
     const form = event.currentTarget;
     const status = qs("#submissionStatus");
-    const token = localStorage.getItem("studioToken");
+    const token = getToken();
     if (!token) {
       status.innerHTML = `请先到 <a href="/admin.html">用户中心</a> 注册或登录，登录后提交的征稿才能查看进度。`;
       return;
@@ -107,6 +151,29 @@ async function bindSubmissionForm() {
     } catch (error) {
       status.textContent = error.message;
     }
+  });
+}
+
+function bindHomeAuth() {
+  document.querySelectorAll("[data-home-auth-tab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const mode = button.dataset.homeAuthTab;
+      document.querySelectorAll("[data-home-auth-tab]").forEach((item) => item.classList.toggle("active", item === button));
+      qs("#homeLoginForm").classList.toggle("hidden", mode !== "login");
+      qs("#homeRegisterForm").classList.toggle("hidden", mode !== "register");
+    });
+  });
+  qs("#homeLoginForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    homeAuth("/api/auth/login", event.currentTarget, qs("#homeLoginStatus"));
+  });
+  qs("#homeRegisterForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    homeAuth("/api/auth/register", event.currentTarget, qs("#homeRegisterStatus"));
+  });
+  qs("#homeLogoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("studioToken");
+    setSignedOut();
   });
 }
 
@@ -137,6 +204,8 @@ async function init() {
   renderGallery();
   observeReveals();
   animateCounters();
+  bindHomeAuth();
+  loadHomeAccount();
   bindSubmissionForm();
   bindMessageForm();
   qs("#closeLightbox").addEventListener("click", () => { qs("#lightbox").hidden = true; });
